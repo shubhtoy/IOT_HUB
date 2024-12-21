@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs Viewer</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        .log {
+            background-color: #2c2c2c;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .log h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #ffab00;
+        }
+
+        .log p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .log span {
+            font-weight: bold;
+            color: #bb86fc;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .actions button {
+            background-color: #bb86fc;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .actions button:hover {
+            background-color: #9b6ce0;
+        }
+    </style>
+    <script>
+        const baseUrl = 'https://flespi.io/gw/channels/1237134/messages';
+        const token = 'FlespiToken BurdKkJDYyOKniFsCTOD97VY0m6us7pCnhSLhwnKqaMa6dt4jtXVOli3UHtZLnt5';
+
+        // Fetch logs with or without additional parameters
+        async function fetchLogs(includeParams = true) {
+            let url = baseUrl;
+
+            if (includeParams) {
+                // Adding the extra parameters like reverse and count
+                const params = {
+                    reverse: true,
+                    count: 50
+                };
+                url = `${baseUrl}?data=${encodeURIComponent(JSON.stringify(params))}`;
+            }
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                }
+            });
+
+            if (!response.ok) {
+                console.error('Failed to fetch logs');
+                return [];
+            }
+
+            const data = await response.json();
+            return data;
+        }
+
+        // Clear logs by requesting the next_key without extra parameters
+        async function clearLogs() {
+            const logsData = await fetchLogs(false);  // Fetch logs with parameters like reverse and count
+            const deleteKey = logsData.next_key;  // Get the next_key
+
+            // Now make a new request to fetch the next logs without extra parameters
+            const clearUrl = `${baseUrl}?data=${encodeURIComponent(JSON.stringify({ delete_key: deleteKey }))}`;
+
+            const response = await fetch(clearUrl, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': token
+                }
+            });
+
+            if (response.ok) {
+                alert('Logs cleared successfully');
+                document.querySelector('.container').innerHTML = '<h1>No Logs Available</h1>';
+            } else {
+                alert('Failed to clear logs');
+            }
+        }
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp * 1000); // Convert to milliseconds
+            const options = {
+                timeZone: 'Asia/Kolkata',
+                hour12: true,
+                weekday: 'long',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            return date.toLocaleString('en-IN', options);
+        }
+
+        function displayLogs(logs) {
+            const container = document.querySelector('.container');
+            container.innerHTML = '<h1>Logs Viewer</h1>';
+
+            logs.result.forEach(log => {
+                const logElement = document.createElement('div');
+                logElement.className = 'log';
+                logElement.innerHTML = `
+                    <h3>Space: <span>${log.ident}</span></h3>
+                    <p><span>Message:</span> ${log.message}</p>
+                    <p><span>Event Timestamp:</span> ${formatTimestamp(log.timestamp)}</p>
+                `;
+                container.appendChild(logElement);
+            });
+
+            const actions = document.createElement('div');
+            actions.className = 'actions';
+            actions.innerHTML = '<button onclick="clearLogs()">Clear Logs</button>';
+            container.appendChild(actions);
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const logs = await fetchLogs(true); // Fetch logs with additional parameters
+            displayLogs(logs);
+        });
+    </script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Loading Logs...</h1>
+    </div>
+</body>
+
+</html>
