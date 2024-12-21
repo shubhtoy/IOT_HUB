@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -55,9 +56,9 @@
             font-weight: 600;
             letter-spacing: 1px;
             cursor: pointer;
-            box-shadow: 
-                0 15px 35px rgba(0,0,0,0.2),
-                0 5px 15px rgba(0,0,0,0.1);
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             overflow: hidden;
             outline: none;
@@ -70,11 +71,9 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(
-                circle at center, 
-                rgba(255,255,255,0.1) 0%, 
-                transparent 70%
-            );
+            background: radial-gradient(circle at center,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    transparent 70%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -85,9 +84,9 @@
 
         .unlock-button:active {
             transform: scale(0.95);
-            box-shadow: 
-                0 10px 25px rgba(0,0,0,0.2),
-                0 3px 10px rgba(0,0,0,0.1);
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.2),
+                0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
         .status-message {
@@ -115,10 +114,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="unlock-container">
         <button class="unlock-button" onclick="unlock()">
-            <i class="ri-lock-unlock-line" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem;"></i>
+            <i class="ri-lock-unlock-line"
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem;"></i>
             <span style="position: absolute; bottom: 20%; left: 50%; transform: translateX(-50%);">UNLOCK</span>
         </button>
         <div class="status-message" id="statusMessage">Waiting for Command</div>
@@ -133,7 +134,9 @@
             const requestData = {
                 topic: "home/door/commands",
                 type: 2,
-                payload: "unlock"
+                payload: "unlock",
+                expiry_interval: 5,
+                retained: false
             };
 
             fetch('https://flespi.io/mqtt/messages', {
@@ -144,21 +147,22 @@
                 },
                 body: JSON.stringify(requestData)
             })
-            .then(response => {
-                if (response.ok) {
-                    statusMessage.textContent = 'Gate Unlocked Successfully!';
-                    statusMessage.style.color = '#4CAF50';
-                } else {
-                    statusMessage.textContent = 'Unlock Failed. Retry.';
+                .then(response => {
+                    if (response.ok) {
+                        statusMessage.textContent = 'Gate Unlocked Successfully!';
+                        statusMessage.style.color = '#4CAF50';
+                    } else {
+                        statusMessage.textContent = 'Unlock Failed. Retry.';
+                        statusMessage.style.color = '#FF6347';
+                    }
+                })
+                .catch(error => {
+                    statusMessage.textContent = 'Network Error';
                     statusMessage.style.color = '#FF6347';
-                }
-            })
-            .catch(error => {
-                statusMessage.textContent = 'Network Error';
-                statusMessage.style.color = '#FF6347';
-                console.error('Error:', error);
-            });
+                    console.error('Error:', error);
+                });
         }
     </script>
 </body>
+
 </html>
