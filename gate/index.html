@@ -131,9 +131,9 @@
             statusMessage.style.color = '#FFD700';
 
             const requestData = {
-                topic: "home/gate",
+                topic: "home/door/commands",
                 type: 2,
-                payload: JSON.stringify({ command: "unlock" })
+                payload: "unlock"
             };
 
             fetch('https://flespi.io/mqtt/messages', {
