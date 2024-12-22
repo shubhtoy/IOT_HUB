@@ -2,7 +2,7 @@
     "name": "Home Gate Control",
     "short_name": "Gate Lock",
     "description": "Smart door access control system",
-    "start_url": "/",
+    "start_url": "/IOT_HUB/gate/pwa",
     "display": "standalone",
     "background_color": "#121212",
     "theme_color": "#bb86fc",
