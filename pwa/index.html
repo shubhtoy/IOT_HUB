@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Access Control</title>
+
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Smart Access">
+    <meta name="description" content="Smart door access control system">
+
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180x180.png">
+
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+        href="splash/apple-launch-1242x2688.png">
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+        href="splash/apple-launch-828x1792.png">
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+        href="splash/apple-launch-1125x2436.png">
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)"
+        href="splash/apple-launch-1242x2208.png">
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+        href="splash/apple-launch-750x1334.png">
+
+    <!-- PWA Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#bb86fc">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css" rel="stylesheet">
+
+    <style>
+        /* Your existing styles remain the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Add iOS-specific height fix */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
+
+            html {
+                height: -webkit-fill-available;
+            }
+        }
+
+        /* Rest of your existing styles remain exactly the same */
+        /* ... (keep all your existing styles) ... */
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Access Control</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#bb86fc">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Smart Access">
+    <meta name="description" content="Smart door access control system">
+
+    <!-- PWA Links -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image" href="splash/apple-splash-2048-2732.png"
+        media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="splash/apple-splash-1668-2388.png"
+        media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="splash/apple-splash-1536-2048.png"
+        media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="splash/apple-splash-1125-2436.png"
+        media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="splash/apple-splash-828-1792.png"
+        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" media="" <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100dvh;
+            background: linear-gradient(135deg, #121212, #1e1e1e);
+            overscroll-behavior: none;
+            touch-action: manipulation;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background-color: #1e1e1e;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: min(30px, 5vh);
+            text-align: center;
+            margin: 20px;
+        }
+
+        .title {
+            color: #bb86fc;
+            font-size: clamp(20px, 5vw, 24px);
+            margin-bottom: min(30px, 4vh);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .unlock-button {
+            width: min(200px, 60vw);
+            height: min(200px, 60vw);
+            border-radius: 50%;
+            background: linear-gradient(145deg, #bb86fc, #9b6ce0);
+            border: none;
+            color: #ffffff;
+            font-size: clamp(16px, 4vw, 20px);
+            cursor: pointer;
+            margin: min(20px, 3vh) auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.3);
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+
+        .unlock-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(187, 134, 252, 0.4);
+        }
+
+        .unlock-button:active {
+            transform: scale(0.95);
+        }
+
+        .unlock-button i {
+            font-size: clamp(36px, 8vw, 48px);
+            margin-bottom: 10px;
+        }
+
+        .status {
+            background-color: #2c2c2c;
+            padding: min(15px, 3vh);
+            border-radius: 8px;
+            margin-top: min(20px, 3vh);
+            font-size: clamp(14px, 3.5vw, 16px);
+            transition: all 0.3s ease;
+        }
+
+        .status.success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .status.error {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #F44336;
+        }
+
+        .status.pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #FFC107;
+        }
+
+        .offline-banner {
+            display: none;
+            background-color: #F44336;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* iOS PWA fixes */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
+
+            html {
+                height: -webkit-fill-available;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .unlock-button {
+                width: min(150px, 40vw);
+                height: min(150px, 40vw);
+            }
+
+            .title {
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            .container {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .title {
+                margin-bottom: 0;
+                flex: 1;
+            }
+
+            .unlock-button {
+                margin: 0;
+                width: min(120px, 30vh);
+                height: min(120px, 30vh);
+            }
+
+            .status {
+                flex: 1;
+                margin-top: 0;
+            }
+        }
+
+        /* Add to Home Screen prompt styles */
+        .install-prompt {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c2c2c;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .install-prompt button {
+            background-color: #bb86fc;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="offline-banner" class="offline-banner">
+        You are currently offline
+    </div>
+
+    <div id="install-prompt" class="install-prompt">
+        Install this app on your device<br>
+        <button id="install-button">Install</button>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Smart Access Control</h1>
+        <button class="unlock-button" onclick="unlock()">
+            <i class="ri-lock-unlock-line"></i>
+            <span>UNLOCK</span>
+        </button>
+        <div class="status" id="statusMessage">System Ready</div>
+    </div>
+
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch((err) => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // Handle Install Prompt
+        let deferredPrompt;
+        const installPrompt = document.getElementById('install-prompt');
+        const installButton = document.getElementById('install-button');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.style.display = 'block';
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                }
+                deferredPrompt = null;
+                installPrompt.style.display = 'none';
+            }
+        });
+
+        // Handle offline/online events
+        const offlineBanner = document.getElementById('offline-banner');
+
+        window.addEventListener('online', function () {
+            offlineBanner.style.display = 'none';
+        });
+
+        window.addEventListener('offline', function () {
+            offlineBanner.style.display = 'block';
+        });
+
+        // Prevent double-tap zoom on iOS
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        // Handle unlock functionality
+        function unlock() {
+            const statusMessage = document.getElementById('statusMessage');
+            const unlockButton = document.querySelector('.unlock-button');
+
+            // Add visual feedback and update status
+            unlockButton.classList.add('pulse');
+            statusMessage.className = 'status pending';
+            statusMessage.textContent = 'Sending Unlock Signal...';
+
+            // Add haptic feedback if available
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(100);
+            }
+
+            const requestData = {
+                topic: "home/door/commands",
+                type: 2,
+                payload: "unlock",
+                expiry_interval: 5,
+                retained: false
+            };
+
+            fetch('https://flespi.io/mqtt/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'FlespiToken BurdKkJDYyOKniFsCTOD97VY0m6us7pCnhSLhwnKqaMa6dt4jtXVOli3UHtZLnt5'
+                },
+                body: JSON.stringify(requestData)
+            })
+                .then(response => {
+                    unlockButton.classList.remove('pulse');
+                    if (response.ok) {
+                        statusMessage.className = 'status success';
+                        statusMessage.textContent = 'Access Granted!';
+                        if (window.navigator && window.navigator.vibrate) {
+                            window.navigator.vibrate([100, 50, 100]);
+                        }
+                        setTimeout(() => {
+                            statusMessage.className = 'status';
+                            statusMessage.textContent = 'System Ready';
+                        }, 3000);
+                    } else {
+                        statusMessage.className = 'status error';
+                        statusMessage.textContent = 'Access Denied. Please Try Again.';
+                        if (window.navigator && window.navigator.vibrate) {
+                            window.navigator.vibrate([200, 100, 200]);
+                        }
+                    }
+                })
+                .catch(error => {
+                    unlockButton.classList.remove('pulse');
+                    statusMessage.className = 'status error';
+                    statusMessage.textContent = 'Network Error. Please Try Again.';
+                    console.error('Error:', error);
+                    if (window.navigator && window.navigator.vibrate) {
+                        window.navigator.vibrate([200, 100, 200]);
+                    }
+                });
+        }
+
+        // iOS PWA fix for 100vh
+        const resizeHeight = () => {
+            document.body.style.minHeight = window.innerHeight + 'px';
+        };
+        window.addEventListener('resize', resizeHeight);
+        resizeHeight();
+    </script>
+</body>
+
+</html>
