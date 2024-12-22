@@ -337,7 +337,7 @@
         // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('https://shubhtoy.github.io/IOT_HUB/gate/pwa/sw.js')
+                navigator.serviceWorker.register('https://shubhtoy.github.io/IOT_HUB/gate/pwa/sw.js', { scope: 'https://shubhtoy.github.io/IOT_HUB/gate/pwa/' })
                     .then((registration) => {
                         console.log('ServiceWorker registration successful');
                     })
