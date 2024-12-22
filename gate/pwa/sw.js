@@ -1,17 +1,19 @@
 const CACHE_NAME = 'smart-access-v1';
+const BASE_URL = 'https://shubhtoy.github.io/IOT_HUB/gate/pwa';
+
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/manifest.json',
+    `${BASE_URL}/`,
+    `${BASE_URL}/index.html`,
+    `${BASE_URL}/manifest.json`,
     'https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css',
-    '/icons/icon-72x72.png',
-    '/icons/icon-96x96.png',
-    '/icons/icon-128x128.png',
-    '/icons/icon-144x144.png',
-    '/icons/icon-152x152.png',
-    '/icons/icon-192x192.png',
-    '/icons/icon-384x384.png',
-    '/icons/icon-512x512.png'
+    `${BASE_URL}/icons/icon-72x72.png`,
+    `${BASE_URL}/icons/icon-96x96.png`,
+    `${BASE_URL}/icons/icon-128x128.png`,
+    `${BASE_URL}/icons/icon-144x144.png`,
+    `${BASE_URL}/icons/icon-152x152.png`,
+    `${BASE_URL}/icons/icon-192x192.png`,
+    `${BASE_URL}/icons/icon-384x384.png`,
+    `${BASE_URL}/icons/icon-512x512.png`
 ];
 
 // Install event - cache assets
@@ -81,7 +83,7 @@ self.addEventListener('fetch', (event) => {
                     if (response) {
                         return response;
                     }
-                    return caches.match('/offline.html');
+                    return caches.match('offline.html');
                 })
         );
     }
